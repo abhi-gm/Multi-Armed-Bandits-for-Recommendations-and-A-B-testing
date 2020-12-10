@@ -7,23 +7,24 @@ Author - Abhishek Maheshwarappa and Jiaxin Tong
 import numpy as np
 from tqdm import tqdm
 
-class EpsilonGreedyReplayer():
+class UCBSamplingReplayer():
     '''
-    A class to provide functionality for simulating the replayer method on an epsilon-Greedy bandit algorithm.
+    A class to provide functionality for simulating the replayer method on a Thompson Sampling bandit algorithm
+
     '''
 
-    def __init__(self, epsilon, n_visits, reward_history, item_col_name, visitor_col_name, reward_col_name, n_iterations=1):
+    def __init__(self,ucb_c, n_visits, reward_history, item_col_name, visitor_col_name, reward_col_name, n_iterations=1):
         
         self.reward_history = reward_history
         self.item_col_name = item_col_name
         self.visitor_col_name = visitor_col_name
         self.reward_col_name = reward_col_name
+        self.ucb_c = ucb_c
 
         # number of runs to average over
         self.n_iterations = n_iterations
     
-        # parameter to control exploration vs exploitation
-        self.epsilon = epsilon
+
 
         # number of visits to replay/simulate
         self.n_visits = n_visits
@@ -38,33 +39,30 @@ class EpsilonGreedyReplayer():
         
         self.is_testing = True
         self.best_item_id = None
-    
-    def select_item(self):
-        
-        # decide to explore or exploit
-        if np.random.uniform() < self.epsilon: # explore
-            item_id = np.random.randint(self.n_items)
-            
-        else: # exploit
-            item_id = np.argmax(self.n_item_rewards)
-            
-        return item_id
-    
+
     def reset(self):
-        # number of times each item has been sampled (previously n_sampled)
-        self.n_item_samples = np.zeros(self.n_items)
+        self.Q = np.zeros(self.n_items) # q-value of actions
+        self.N = np.zeros(self.n_items) + 0.0001 # action count
+        self.timestep = 1
+
+
+    def select_item(self):
+
+        ln_timestep = np.log(np.full(self.n_items, self.timestep))
+        confidence = self.ucb_c * np.sqrt(ln_timestep/self.N)
+
+        action = np.argmax(self.Q + confidence)
+        self.timestep += 1
         
-        # fraction of time each item has resulted in a reward (previously movie_clicks)
-        self.n_item_rewards = np.zeros(self.n_items)
+        return action
 
     def record_result(self, visit, item_idx, reward):
-    
-        self.n_item_samples[item_idx] += 1
         
-        alpha = 1./self.n_item_samples[item_idx]
-        self.n_item_rewards[item_idx] += alpha * (reward - self.n_item_rewards[item_idx])
+        # update value estimate
+        self.N[item_idx] += 1 # increment action count
+        self.Q[item_idx] += 1/self.N[item_idx] * (reward - self.Q[item_idx]) # inc. update rule
 
-    
+
     def replay(self):
 
         results = []
