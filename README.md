@@ -28,8 +28,10 @@ Format: ![Alt Text](https://github.com/abhi-gm/Multi-Armed-Bandits-for-Recommend
 
 # **Conclusion**
 
-From above it clear that Multi-arm bandit is way better compared to A/B testing
-Among the Multi-arm bandit, Thompson sampling works the best
+* From above it clear that Multi-arm bandit is way better compared to A/B testing
+
+* Among the Multi-arm bandit, Thompson sampling works the best
+
 The Thompson Sampling results (brown) are the best of them all. This bandit performs better than the ε-Greedy bandit because it dynamically adjusts the rate at which it explores — rather than using a constant rate. In the beginning, it explores more often, but over time, it explores less often. As a result, this bandit quickly identifies the best product and exploits it more frequently after it has been found, leading to high performance in both the short- and long-term.
 
 
