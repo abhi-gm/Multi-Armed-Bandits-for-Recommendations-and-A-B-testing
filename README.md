@@ -7,5 +7,13 @@ Data can be downloaded from the
 
 https://www.kaggle.com/saurav9786/amazon-product-reviews
 
+## Amazon Product Reviews
 
-Amazon Product Reviews - Electronic_Products User Ratings
+* userId : Every user identified with a unique id (First Column)
+
+* productId : Every product identified with a unique id(Second Column)
+
+* Rating : Rating of the corresponding product by the corresponding user(Third Column)
+
+* timestamp : Time of the rating ( Fourth Column)
+
