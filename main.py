@@ -55,7 +55,7 @@ class Main_class:
     @staticmethod
     def get_loggers(temp_path):
         # name the logger as HPC-AI skunkworks
-        logger = logging.getLogger("HPC-AI skunkworks")
+        logger = logging.getLogger("Multi-Arm-Bandit")
         logger.setLevel(logging.INFO)
         # file where the custom logs needs to be handled
         f_hand = logging.FileHandler(temp_path + '/.log')
@@ -183,6 +183,9 @@ class Main_class:
         self.logger.info('Exporting the latency')
         file_name = self.target_dir +'/latency_stats.json'
         self.export_to_json(self.latency, file_name)
+        self.logger.info("Program completed normally")
+        self.logger.handlers.clear()
+
 
     def export_to_json(self, dictionary, file_name):
         try:
