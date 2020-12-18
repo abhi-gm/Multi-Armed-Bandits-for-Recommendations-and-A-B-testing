@@ -35,3 +35,13 @@ Format: ![Alt Text](https://github.com/abhi-gm/Multi-Armed-Bandits-for-Recommend
 The Thompson Sampling results (brown) are the best of them all. This bandit performs better than the ε-Greedy bandit because it dynamically adjusts the rate at which it explores — rather than using a constant rate. In the beginning, it explores more often, but over time, it explores less often. As a result, this bandit quickly identifies the best product and exploits it more frequently after it has been found, leading to high performance in both the short- and long-term.
 
 
+### **Steps to run the code**
+
+1.  Download the data from kaggle and add it to the data folder
+2.  Create virtual envirnonment using conda -  [refer this](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-with-commands)
+3.  cd to the directory where requirements.txt is located
+4.  activate your virtualenv
+5.  run: pip install -r requirements.txt in your shell
+6.  run this using command python main.py, which runs all the algorithims
+7.  output will be saved in the output folder
+8.  analyze the output using Multi-Armed-Bandits-for-Recommendations-and-A-B-testing.ipynb before running change the path of data
